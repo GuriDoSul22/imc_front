@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs com API</title>
+</head>
+<body>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="abrirTab(0)">IMC</button>
+        <button class="tab-btn" onclick="abrirTab(1)">Média</button>
+    </div>
+
+    <div class="tab-content active">
+        <h2>Calcular IMC</h2>
+        <input type="text" id="nome" placeholder="Digite seu nome">
+        <input type="number" id="idade" placeholder="Digite sua idade">
+        <input type="number" id="peso" placeholder="Digite seu peso">
+        <input type="number" id="nome" placeholder="Digite sua altura">
+        <button onclick="CalcularIMC()">Calcular IMC</button>
+        <div class="resultado" id="resultadoIMC"></div>
+        </div>
+        <script>
+            function abrirTab(index){
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+                document.querySelectorAll('tab-content')[index].classList.add('active');
+                document.querySelectorAll('tab-btn')[index].classList.add('active');
+            }
+            async function calcularIMC(){
+                const dados = {
+                    nome: document.getElementById("nome").value,
+                    idade: document.getById("idade").value,
+                    peso: document.getById("peso").value,
+                    altura: document.getById("altura").value,
+                }
+
+
+                try{
+                    const response = await fetch("http://localhost:3000/imc", {
+                        method: "POST",
+                        headers: {
+                            "content-type": "application/json"
+                        },
+                        body: JSON.stringify(dados)
+
+                    });
+                    const resultado = await response.json();
+                    document.getElementById("resultadoIMC").innerHTML = formatarResposta(resultado);
+
+
+                } catch (error) {
+                    document.getElementById("resultadoIMC").innerHTML = formatarResposta({
+                        erro: "Ocorreu um erro inesperado, tente novamente mais tarde."
+                    });
+                }
+
+            }
+        </script>
+    
+
+
+</body>
+</html>
