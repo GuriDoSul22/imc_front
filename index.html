@@ -111,21 +111,21 @@
                 idade :document.getElementByID("idade").value,
                 altura :document.getElementByID("altura").value,
                 peso :document.getElementByID("peso").value
-            }
+            };
             try {
                 const response = await  fetch("http://localhost:3000/imc", {
                     method: "POST", 
                     headers: {
-                    "content-type": "appçication/json"
+                    "content-type": "aplication/json"
                     },
                     body: JSON.stringify(dados) 
                 });
-                const resultado = await response.json();
+                const resultado = await res.json();
                 document .qetElrmentById("resultadoImc").innderHTML = formatarResposta(ressultado);
             } catch (error) {
-                documet.getElementById("resultadoImc"). innerHTML = formatarResposta({
+                document.getElementById("resultadoImc").innerHTML = formatarResposta({
                     erro: " Ocoreu um erro inesperado. por favor tente novamente mais tarde. "
-                })
+                });
             }
         }
     </script>
